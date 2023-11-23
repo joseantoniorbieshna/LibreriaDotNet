@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LibreriaJose.Models.Data.Libro>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Autor_id.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Editorial_id.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado_id.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Formato_id.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Imagen)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Formato_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imagen)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ISBN }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ISBN }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ISBN })
+        </td>
+    </tr>
+}
+
+</table>

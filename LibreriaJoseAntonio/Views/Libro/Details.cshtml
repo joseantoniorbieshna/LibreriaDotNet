@@ -1,0 +1,82 @@
+﻿@model LibreriaJose.Models.Data.Libro
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Libro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor_id.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Autor_id.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Editorial_id.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Editorial_id.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado_id.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado_id.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Formato_id.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Formato_id.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imagen)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ISBN }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
