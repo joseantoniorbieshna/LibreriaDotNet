@@ -54,6 +54,7 @@ namespace LibreriaJoseAntonio.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
         {
+
             if (ModelState.IsValid)
             {
                 db.Libros.Add(libro);

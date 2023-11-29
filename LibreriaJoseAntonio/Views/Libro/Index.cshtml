@@ -39,7 +39,37 @@
     </tr>
 
 @foreach (var item in Model) {
-    @item
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Formato_id.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imagen)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ISBN }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ISBN }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ISBN })
+        </td>
+    </tr>
 }
 
 </table>
