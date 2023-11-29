@@ -10,6 +10,6 @@ namespace LibreriaJose.Models.Data
     {
         [Key]
         public int Id { get; set; }
-        public String Nombre { get; set; }
+        public string Nombre { get; set; }
     }
 }
