@@ -3,6 +3,15 @@
 @{
     ViewBag.Title = "Create";
 }
+<style>
+    .grouping {
+        display:flex;
+    }
+    .mybutton {
+        display:flex;
+        align-items:center;
+    }
+</style>
 
 <h2>Create</h2>
 
@@ -22,12 +31,14 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group ">
             @Html.LabelFor(model => model.AutorId, "AutorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 grouping">
                 @Html.DropDownList("AutorId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AutorId, "", new { @class = "text-danger" })
+                <a class="btn fa fa-plus-circle mybutton" aria-hidden="true"></a>
             </div>
+           
         </div>
 
         <div class="form-group">
