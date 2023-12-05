@@ -39,7 +39,7 @@
         backdrop-filter: blur(20px);
     }
     .menu_info {
-        background-color: white;
+        padding: 1rem 0rem 1rem 0rem;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
         width: 100%;
@@ -50,8 +50,8 @@
         align-items: center;
         transform: scale(0);
         opacity: 0;
-        transition:1s linear;
-        transition:0.2s linear;
+        transition: 1s linear;
+        transition: 0.2s linear;
     }
     .mybutton {
         display:block;
@@ -81,42 +81,13 @@
             <div class="precio text-center">
                 @Html.DisplayFor(modelItem => item.Precio)€
             </div>
-            <div class="menu_info animate__animated animate__bounce">
-                @Html.ActionLink("Edit", "Edit", new { id = item.ISBN }, new { @class = "mybutton btn btn-primary btn-lg" })
-                @Html.ActionLink("Details", "Details", new { id = item.ISBN }, new {@class= "mybutton btn btn-primary btn-lg" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ISBN }, new { @class = "mybutton btn btn-primary btn-lg" })
+            <div class="menu_info">
+                @Html.ActionLink("Ver", "Details", new { id = item.ISBN }, new {@class= "fa fa-delete mybutton btn btn-primary btn-lg" })
+                @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-warning btn-lg" })
+                @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-danger btn-lg" })
             </div>
 
         </div>
-
-        @*     <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Autor_id.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado_id.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Formato_id.Nombre)
-                </td>
-                <td>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cantidad)
-                </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ISBN }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ISBN }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ISBN })
-                </td>
-            </tr>*@
     }
 </div>
 
