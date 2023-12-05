@@ -33,30 +33,32 @@
         color: red;
     }
     .container_product:hover .menu_info {
-        visibility: visible;
-        transition: opacity 0.2s linear;
-        opacity:1;
+        transform: scale(1);
+        opacity: 1;
+        background-color: rgb(255, 255, 255,0.1);
+        backdrop-filter: blur(20px);
     }
     .menu_info {
         background-color: white;
-        border-width:1px 0px 0px 0px;
-        border-style:solid;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
         width: 100%;
         right: 0;
         bottom: 0;
-        display:flex;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        visibility:hidden;
-        opacity:0;
+        transform: scale(0);
+        opacity: 0;
+        transition:1s linear;
+        transition:0.2s linear;
     }
     .mybutton {
         display:block;
         width:fit-content;
         margin:0.5rem;
     }
+
 </style>
 
 
@@ -71,7 +73,7 @@
     {
         <div class="container_product">
             <img src="@item.Imagen" class="img-fluid product_img" />
-            <div class="info_book ">
+            <div class="info_book" >
                 <p class="title text-center">@Html.DisplayFor(modelItem => item.Titulo)</p>
                 <p class="autor text-center">@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</p>
 
@@ -79,7 +81,7 @@
             <div class="precio text-center">
                 @Html.DisplayFor(modelItem => item.Precio)€
             </div>
-            <div class="menu_info">
+            <div class="menu_info animate__animated animate__bounce">
                 @Html.ActionLink("Edit", "Edit", new { id = item.ISBN }, new { @class = "mybutton btn btn-primary btn-lg" })
                 @Html.ActionLink("Details", "Details", new { id = item.ISBN }, new {@class= "mybutton btn btn-primary btn-lg" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.ISBN }, new { @class = "mybutton btn btn-primary btn-lg" })
