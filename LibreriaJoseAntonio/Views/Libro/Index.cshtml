@@ -39,7 +39,7 @@
         backdrop-filter: blur(20px);
     }
     .menu_info {
-        padding: 1rem 0rem 1rem 0rem;
+        padding: 2rem 0rem 2rem 0rem;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
         width: 100%;
@@ -57,6 +57,9 @@
         display:block;
         width:fit-content;
         margin:0.5rem;
+    }
+    .seguidos {
+    display:flex;
     }
 
 </style>
@@ -82,9 +85,11 @@
                 @Html.DisplayFor(modelItem => item.Precio)€
             </div>
             <div class="menu_info">
-                @Html.ActionLink("Ver", "Details", new { id = item.ISBN }, new {@class= "fa fa-delete mybutton btn btn-primary btn-lg" })
-                @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-warning btn-lg" })
-                @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-danger btn-lg" })
+                <div class="seguidos">
+                    @Html.ActionLink("Ver", "Details", new { id = item.ISBN }, new { @class = "fa fa-delete mybutton btn btn-primary btn-lg" })
+                    @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-warning btn-lg" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-danger btn-lg" })
+                </div>
             </div>
 
         </div>
