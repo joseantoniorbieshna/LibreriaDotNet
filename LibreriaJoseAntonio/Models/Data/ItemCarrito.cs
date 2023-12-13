@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,8 +12,11 @@ namespace LibreriaJoseAntonio.Models.Data
     {
         [Key]
         public int Id { get; set; }
-        public virtual Libro Libro { get; set; }
-        public int cantidad { get; set; }
+
+        [ForeignKey("Libro")]
+        public string Isbn { get; set; }
+        public Libro Libro { get; set; }
+        public int Cantidad { get; set; }
         public string IdUser { get; set; }
     }
 }

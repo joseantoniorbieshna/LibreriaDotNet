@@ -8,18 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using LibreriaJose.Models.Data;
 using LibreriaJoseAntonio.Models;
+using LibreriaJoseAntonio.Models.Repository;
 
 namespace LibreriaJoseAntonio.Controllers
 {
     public class LibroController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private LibroRepository libroRepository=new LibroRepository();
 
         // GET: Libro
         public ActionResult Index()
         {
-            var libros = db.Libros.Include(l => l.Autor_id).Include(l => l.Editorial_id).Include(l => l.Estado_id).Include(l => l.Formato_id);
-            return View(libros.ToList());
+            return View(libroRepository.GetAll());
         }
 
         // GET: Libro/Details/5
@@ -29,7 +30,7 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = db.Libros.Find(id);
+            Libro libro = libroRepository.GetByIsbn(id);
             if (libro == null)
             {
                 return HttpNotFound();
@@ -76,7 +77,7 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = db.Libros.Find(id);
+            Libro libro = libroRepository.GetByIsbn(id);
             if (libro == null)
             {
                 return HttpNotFound();
@@ -115,7 +116,7 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = db.Libros.Find(id);
+            Libro libro = libroRepository.GetByIsbn(id);
             if (libro == null)
             {
                 return HttpNotFound();
@@ -128,7 +129,7 @@ namespace LibreriaJoseAntonio.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Libro libro = db.Libros.Find(id);
+            Libro libro = libroRepository.GetByIsbn(id);
             db.Libros.Remove(libro);
             db.SaveChanges();
             return RedirectToAction("Index");

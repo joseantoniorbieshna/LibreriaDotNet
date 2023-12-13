@@ -18,7 +18,9 @@ namespace LibreriaJoseAntonio.Controllers
         // GET: ItemCarrito
         public ActionResult Index()
         {
-            return View(db.ItemsCarrito.ToList());
+            
+            var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro);
+            return View(itemsCarrito.ToList());
         }
 
         // GET: ItemCarrito/Details/5
@@ -39,6 +41,7 @@ namespace LibreriaJoseAntonio.Controllers
         // GET: ItemCarrito/Create
         public ActionResult Create()
         {
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo");
             return View();
         }
 
@@ -47,7 +50,7 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,cantidad,IdUser")] ItemCarrito itemCarrito)
+        public ActionResult Create([Bind(Include = "Id,Isbn,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +59,7 @@ namespace LibreriaJoseAntonio.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
             return View(itemCarrito);
         }
 
@@ -71,6 +75,7 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
             return View(itemCarrito);
         }
 
@@ -79,7 +84,7 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,cantidad,IdUser")] ItemCarrito itemCarrito)
+        public ActionResult Edit([Bind(Include = "Id,Isbn,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +92,7 @@ namespace LibreriaJoseAntonio.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
             return View(itemCarrito);
         }
 
@@ -123,6 +129,11 @@ namespace LibreriaJoseAntonio.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public JsonResult AgregarItem(string isbn,int cantidad) {
+            //Libro libro = db.Libros;
+            return null;
         }
     }
 }

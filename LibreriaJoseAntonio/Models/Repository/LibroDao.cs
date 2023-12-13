@@ -9,6 +9,6 @@ namespace LibreriaJose.Models.Repository
     public interface LibroDao
     {
         List<Libro> GetAll();
-        Producto GetByIsbn(int isbn);
+        Libro GetByIsbn(string isbn);
     }
 }

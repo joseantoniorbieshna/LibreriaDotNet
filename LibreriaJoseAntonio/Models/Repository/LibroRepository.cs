@@ -1,29 +1,26 @@
 ﻿using LibreriaJose.Models.Data;
-using LibreriaJoseAntonio.Models;
+using LibreriaJose.Models.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace LibreriaJose.Models.Repository
+namespace LibreriaJoseAntonio.Models.Repository
 {
     public class LibroRepository : LibroDao
     {
-        private ApplicationDbContext db;
-        public LibroRepository() {
-            db =new ApplicationDbContext();
-        }
+        ApplicationDbContext db = new ApplicationDbContext();
+
         public List<Libro> GetAll()
         {
-            return null;//db.Libr.ToList();
+            
+            return db.Libros.Include(l => l.Autor_id).Include(l => l.Editorial_id).Include(l => l.Estado_id).Include(l => l.Formato_id).ToList();
         }
 
-        public Producto GetByIsbn(int isbn)
+        public Libro GetByIsbn(string isbn)
         {
-            return null;//db.Libros.FirstOrDefault(e => e.ISBN==isbn);
+            return db.Libros.Include(l => l.Autor_id).Include(l => l.Editorial_id).Include(l => l.Estado_id).Include(l => l.Formato_id).FirstOrDefault(libro=>libro.ISBN==isbn);
         }
-
-        
-
     }
 }
