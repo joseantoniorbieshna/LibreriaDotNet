@@ -174,14 +174,15 @@
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\FormatoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemCarritoController.cs" />
     <Compile Include="Controllers\LibroController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202311230823045_Reset.cs" />
-    <Compile Include="Migrations\202311230823045_Reset.designer.cs">
-      <DependentUpon>202311230823045_Reset.cs</DependentUpon>
+    <Compile Include="Migrations\202312131729591_Reset.cs" />
+    <Compile Include="Migrations\202312131729591_Reset.designer.cs">
+      <DependentUpon>202312131729591_Reset.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Data\Editorial.cs" />
     <Compile Include="Models\Data\Estado.cs" />
     <Compile Include="Models\Data\Formato.cs" />
+    <Compile Include="Models\Data\ItemCarrito.cs" />
     <Compile Include="Models\Data\Libro.cs" />
     <Compile Include="Models\Data\Producto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -324,6 +326,11 @@
     <Content Include="Views\Libro\Details.cshtml" />
     <Content Include="Views\Libro\Edit.cshtml" />
     <Content Include="Views\Libro\Index.cshtml" />
+    <Content Include="Views\ItemCarrito\Create.cshtml" />
+    <Content Include="Views\ItemCarrito\Delete.cshtml" />
+    <Content Include="Views\ItemCarrito\Details.cshtml" />
+    <Content Include="Views\ItemCarrito\Edit.cshtml" />
+    <Content Include="Views\ItemCarrito\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,8 +341,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202311230823045_Reset.resx">
-      <DependentUpon>202311230823045_Reset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202312131729591_Reset.resx">
+      <DependentUpon>202312131729591_Reset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

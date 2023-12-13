@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using LibreriaJose.Models.Data;
+using LibreriaJoseAntonio.Models.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -31,6 +32,7 @@ namespace LibreriaJoseAntonio.Models
         public DbSet<Editorial> Editoriales { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Libro> Libros { get; set; }
+        public DbSet<ItemCarrito> ItemsCarrito { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
