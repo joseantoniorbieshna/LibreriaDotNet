@@ -19,3 +19,10 @@ textarea {
     max-width: 280px;
 }
 
+@keyframes slideInUp {
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -22,5 +22,13 @@ namespace LibreriaJoseAntonio.Models.Repository
         {
             return db.Libros.Include(l => l.Autor_id).Include(l => l.Editorial_id).Include(l => l.Estado_id).Include(l => l.Formato_id).FirstOrDefault(libro=>libro.ISBN==isbn);
         }
+
+        public void RemoveBook(Libro libro) { 
+            db.Libros.Remove(libro);
+        }
+
+        public void guardarCambios() {
+            db.SaveChanges();
+        }
     }
 }

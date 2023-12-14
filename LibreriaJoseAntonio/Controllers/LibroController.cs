@@ -130,8 +130,8 @@ namespace LibreriaJoseAntonio.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Libro libro = libroRepository.GetByIsbn(id);
-            db.Libros.Remove(libro);
-            db.SaveChanges();
+            libroRepository.RemoveBook(libro);
+            libroRepository.guardarCambios();
             return RedirectToAction("Index");
         }
 
