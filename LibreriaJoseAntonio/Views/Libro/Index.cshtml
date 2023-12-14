@@ -48,8 +48,8 @@
     }
 
     .menu_info {
-        cursor:default;
-        background: linear-gradient(0deg, rgb(218, 218, 218) 0%,rgb(218, 218, 218) 45%, rgba(255,255,255,0) 100%);
+        cursor: default;
+        background: linear-gradient(0deg, rgb(255, 255, 255) 0%,rgb(255, 255, 255,1) 60%, rgba(255,255,255,0.3) 100%);
         padding: 2rem 0rem 2rem 0rem;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
@@ -109,7 +109,6 @@
             </div>
             <div class="menu_info">
                 <div class="seguidos">
-                    @Html.ActionLink(" ", "Details", new { id = item.ISBN }, new { @class = "fa fa-eye mybutton btn btn-outline-success btn-lg" })
                     @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
                     @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
                 </div>
