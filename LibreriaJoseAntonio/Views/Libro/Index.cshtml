@@ -49,8 +49,8 @@
 
     .menu_info {
         cursor: default;
-        background: linear-gradient(0deg, rgb(255, 255, 255) 0%,rgb(255, 255, 255,1) 60%, rgba(255,255,255,0.3) 100%);
-        padding: 2rem 0rem 2rem 0rem;
+        background: linear-gradient(0deg, rgb(240, 240, 240) 0%,rgb(255, 255, 255,1) 60%, rgba(255,255,255,0.8) 100%);
+        padding: 0rem 0rem 2rem 0rem;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
         width: 100%;
@@ -99,22 +99,24 @@
             <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.ISBN})">
                 <img src="@item.Imagen" class="img-fluid product_img" />
                 <div class="info_book">
-                    <p class="title text-center">@Html.DisplayFor(modelItem => item.Titulo)</p>
-                    <p class="autor text-center">@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</p>
 
+                    <p class="title text-center"><b>@Html.DisplayFor(modelItem => item.Titulo)</b></p>
+                    <p class="autor text-center"><b>@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</b></p>
+                    <p class="editorial text-center"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
+                    <br />
                 </div>
-                <div class="precio text-center">
-                    @Html.DisplayFor(modelItem => item.Precio)€
-                </div>
+                <p class="precio text-center">@Html.DisplayFor(modelItem => item.Precio)€</p>
             </div>
             <div class="menu_info">
                 <div class="seguidos">
                     @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
                     @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
+
                 </div>
                 <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
-                    <i class=""fa fa-shopping-cart"></i> Añadir al carrito
+                    <i class="" fa fa-shopping-cart"></i> Añadir al carrito
                 </button>
+
             </div>
 
         </div>

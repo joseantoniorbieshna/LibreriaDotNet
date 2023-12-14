@@ -8,12 +8,20 @@
         display:flex;
     }
     .mybutton {
-        display:flex;
-        align-items:center;
+        display: flex;
+        align-items: center;
+        margin-left:10px;
     }
+    .mybutton:hover {
+        color:greenyellow;
+    }
+    .mybutton:active {
+        color: black;
+    }
+
 </style>
 
-<h2>Create</h2>
+<h2>Crear</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -32,36 +40,44 @@
         </div>
 
         <div class="form-group ">
-            @Html.LabelFor(model => model.AutorId, "AutorId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AutorId, "Autor", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 grouping">
                 @Html.DropDownList("AutorId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AutorId, "", new { @class = "text-danger" })
-                <a class="btn fa fa-plus-circle mybutton" aria-hidden="true"></a>
+                @*Boton de add*@
+                @Html.ActionLink(" ", "Create", "Autor", new { area = "" }, new { @class = "nav-link fa fa-plus mybutton" })
+
             </div>
            
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EditorialId, "EditorialId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.EditorialId, "Editorial", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 grouping">
                 @Html.DropDownList("EditorialId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.EditorialId, "", new { @class = "text-danger" })
+                @*Boton de add*@
+                @Html.ActionLink(" ", "Create", "Editorial", new { area = "" }, new { @class = "nav-link fa fa-plus mybutton" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FormatoId, "FormatoId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.FormatoId, "Formato", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 grouping">
                 @Html.DropDownList("FormatoId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FormatoId, "", new { @class = "text-danger" })
+                @*Boton de add*@
+                @Html.ActionLink(" ", "Create", "Formato", new { area = "" }, new { @class = "nav-link fa fa-plus mybutton" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EstadoId, "EstadoId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.EstadoId, "Estado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 grouping">
                 @Html.DropDownList("EstadoId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.EstadoId, "", new { @class = "text-danger" })
+                @*Boton de add*@
+                @Html.ActionLink(" ", "Create", "Estado", new { area = "" }, new { @class = "nav-link fa fa-plus mybutton" })
             </div>
         </div>
 
@@ -99,12 +115,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a Inicio", "Index")
 </div>
