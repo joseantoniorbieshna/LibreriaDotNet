@@ -71,7 +71,21 @@
     .seguidos {
         display: flex;
     }
+
+    .carrito-btn {
+        background-color:transparent;
+        height:3rem;
+    }
+    .carrito-btn:hover {
+        color:white;
+        background-color:black;
+    }
+        .carrito-btn:active {
+            color: black;
+            background-color: white;
+        }
 </style>
+<div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
 <p>
     @Html.ActionLink("Crear Nuevo", "Create")
@@ -99,7 +113,9 @@
                     @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
                     @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
                 </div>
-                <button type="button" class="carrito-btn" data-isbn="@item.ISBN">Carrito</button>
+                <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
+                    <i class=""fa fa-shopping-cart"></i> Añadir al carrito
+                </button>
             </div>
 
         </div>
@@ -108,10 +124,10 @@
 <script>
 
 $(document).ready(function () {
-    // Asigna un controlador de clic para los botones de carrito
+    // clic para los botones de carrito
     $(".carrito-btn").click(function () {
         var isbn = $(this).data("isbn");
-        console.log("holaa estoy dentro");
+        
 
         // Realiza la solicitud directamente aquí
         fetch('@Url.Action("AgregarItem", "ItemCarrito")', {
@@ -124,15 +140,23 @@ $(document).ready(function () {
                 cantidad: 1
             })
         }).then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
             return response.json();
         }).then(data => {
-            alert(data);
+            console.log("Ha ido bien, añadido libro.");
+            var idUnico = new Date().getTime();
+            var htmlAlerta = `<div id="alerta${idUnico}" class="alert alert-success" role="alert">Se ha añadido el libro al carrito</div>`;
+            $('#contenedorAlertas').append(htmlAlerta);
+            $(`#alerta${idUnico}`).fadeIn();
+
+            setTimeout(function () {
+                $(`#alerta${idUnico}`).fadeOut(400, function () {
+                    $(this).remove();
+                });
+            }, 1000);
+
+
         }).catch(err => {
-            console.error('Error during fetch operation:', err);
-            alert('Error during fetch operation. Please check console for details.');
+            console.error('Error durante la solicitud', err);
         });
     });
 });
@@ -140,11 +164,10 @@ $(document).ready(function () {
 
 
     $(document).ready(function () {
-        // Asigna un controlador de clic para todos los divs con la clase "redireccion"
+        // clic para todos los divs con la clase "redireccion"
         $(".redireccion").click(function () {
             // Obtiene la URL específica del div clicado
             var url = $(this).data("url");
-            // Redirige a la URL
             window.location.href = url;
         });
     });
