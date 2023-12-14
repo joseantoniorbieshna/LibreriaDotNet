@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    
 }
 <style>
 
@@ -98,12 +99,46 @@
                     @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
                     @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
                 </div>
+                <button type="button" class="carrito-btn" data-isbn="@item.ISBN">Carrito</button>
             </div>
 
         </div>
     }
 </div>
 <script>
+
+$(document).ready(function () {
+    // Asigna un controlador de clic para los botones de carrito
+    $(".carrito-btn").click(function () {
+        var isbn = $(this).data("isbn");
+        console.log("holaa estoy dentro");
+
+        // Realiza la solicitud directamente aquí
+        fetch('@Url.Action("AgregarItem", "ItemCarrito")', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                isbn: isbn,
+                cantidad: 1
+            })
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            alert(data);
+        }).catch(err => {
+            console.error('Error during fetch operation:', err);
+            alert('Error during fetch operation. Please check console for details.');
+        });
+    });
+});
+
+
+
     $(document).ready(function () {
         // Asigna un controlador de clic para todos los divs con la clase "redireccion"
         $(".redireccion").click(function () {
@@ -115,4 +150,3 @@
     });
 </script>
 
-</table>

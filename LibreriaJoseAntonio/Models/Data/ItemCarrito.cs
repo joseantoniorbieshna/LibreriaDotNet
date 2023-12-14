@@ -10,6 +10,13 @@ namespace LibreriaJoseAntonio.Models.Data
 {
     public class ItemCarrito
     {
+        public ItemCarrito() { }
+        public ItemCarrito(string idUser, Libro libro, int cantida) {
+            this.IdUser = idUser;
+            this.Libro = libro;
+            this.Isbn = libro.ISBN;
+            this.Cantidad = cantida;
+        }
         [Key]
         public int Id { get; set; }
 

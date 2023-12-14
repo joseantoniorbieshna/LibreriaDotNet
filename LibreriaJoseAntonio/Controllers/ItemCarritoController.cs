@@ -6,14 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using LibreriaJose.Models.Data;
 using LibreriaJoseAntonio.Models;
 using LibreriaJoseAntonio.Models.Data;
+using LibreriaJoseAntonio.Models.Repository;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace LibreriaJoseAntonio.Controllers
 {
     public class ItemCarritoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private LibroRepository libroRepository = new LibroRepository();
 
         // GET: ItemCarrito
         public ActionResult Index()
@@ -131,9 +136,34 @@ namespace LibreriaJoseAntonio.Controllers
             base.Dispose(disposing);
         }
 
+        [HttpPost]
         public JsonResult AgregarItem(string isbn,int cantidad) {
             //Libro libro = db.Libros;
-            return null;
+            string userId = User.Identity.GetUserId();
+            Libro libro = libroRepository.GetByIsbn(isbn);
+
+            ItemCarrito itemsCarrito = db.ItemsCarrito.Include(e => e.Libro).FirstOrDefault(item => item.IdUser.Equals(userId) && libro.ISBN.Equals(isbn));
+            
+            //Si no hay item del libro para ese usuario se crea
+            if (itemsCarrito==null && libro != null)
+            {
+                db.ItemsCarrito.Add(new ItemCarrito(userId, libro, cantidad));
+                db.Entry(libro).State = EntityState.Modified;
+                db.SaveChanges() ;
+                
+                return Json("true");
+            }
+            //Si existe un libro para el usuario
+            else if(libro!=null){
+                db.Entry(itemsCarrito).State = EntityState.Modified;
+
+                itemsCarrito.Cantidad += cantidad;
+
+                db.SaveChanges();
+                return Json("true");
+            }
+
+            return Json("false");
         }
     }
 }
