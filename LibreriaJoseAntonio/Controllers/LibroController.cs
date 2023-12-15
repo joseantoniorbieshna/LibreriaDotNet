@@ -53,10 +53,10 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
+        public ActionResult Create([Bind(Include = "Id,ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
         {
             //Si el isbn ya existe, manda el error
-            if (db.Libros.Find(libro.ISBN)!=null) {
+            if (libroRepository.GetByIsbn(libro.ISBN)!=null) {
                 ModelState.AddModelError("ISBN", "El ISBN es ya existente");
                 ViewBag.AutorId = new SelectList(db.Autores, "Id", "Nombre", libro.AutorId);
                 ViewBag.EditorialId = new SelectList(db.Editoriales, "Id", "Nombre", libro.EditorialId);
@@ -81,13 +81,13 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         // GET: Libro/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = libroRepository.GetByIsbn(id);
+            Libro libro = libroRepository.GetById(id);
             if (libro == null)
             {
                 return HttpNotFound();
@@ -104,8 +104,21 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
+        public ActionResult Edit([Bind(Include = "Id,ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
         {
+            //diferente del isbn entre la base de datos y actual
+            //y ya existe en la bbdd
+            if (libroRepository.GetById(libro.Id).ISBN!=libro.ISBN 
+                && libroRepository.GetByIsbn(libro.ISBN) != null)
+            {
+                ModelState.AddModelError("ISBN", "El ISBN es ya existente");
+                ViewBag.AutorId = new SelectList(db.Autores, "Id", "Nombre", libro.AutorId);
+                ViewBag.EditorialId = new SelectList(db.Editoriales, "Id", "Nombre", libro.EditorialId);
+                ViewBag.EstadoId = new SelectList(db.Estados, "Id", "Nombre", libro.EstadoId);
+                ViewBag.FormatoId = new SelectList(db.Formatos, "Id", "Nombre", libro.FormatoId);
+                return View(libro);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(libro).State = EntityState.Modified;
@@ -120,13 +133,13 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         // GET: Libro/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = libroRepository.GetByIsbn(id);
+            Libro libro = libroRepository.GetById(id);
             if (libro == null)
             {
                 return HttpNotFound();
@@ -137,9 +150,9 @@ namespace LibreriaJoseAntonio.Controllers
         // POST: Libro/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Libro libro = libroRepository.GetByIsbn(id);
+            Libro libro = libroRepository.GetById(id);
             libroRepository.RemoveBook(libro);
             libroRepository.guardarCambios();
             return RedirectToAction("Index");

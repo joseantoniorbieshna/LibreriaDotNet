@@ -14,14 +14,14 @@ namespace LibreriaJoseAntonio.Models.Data
         public ItemCarrito(string idUser, Libro libro, int cantida) {
             this.IdUser = idUser;
             this.Libro = libro;
-            this.Isbn = libro.ISBN;
+            this.Id_libro = libro.Id;
             this.Cantidad = cantida;
         }
         [Key]
         public int Id { get; set; }
 
         [ForeignKey("Libro")]
-        public string Isbn { get; set; }
+        public int Id_libro { get; set; }
         public Libro Libro { get; set; }
         public int Cantidad { get; set; }
         public string IdUser { get; set; }

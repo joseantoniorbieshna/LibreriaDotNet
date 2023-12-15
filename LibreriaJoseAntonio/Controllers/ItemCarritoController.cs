@@ -71,7 +71,7 @@ namespace LibreriaJoseAntonio.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
             return View(itemCarrito);
         }
 
@@ -87,7 +87,7 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
             return View(itemCarrito);
         }
 
@@ -104,7 +104,7 @@ namespace LibreriaJoseAntonio.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Isbn);
+            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
             return View(itemCarrito);
         }
 
@@ -150,28 +150,30 @@ namespace LibreriaJoseAntonio.Controllers
                 string userId = User.Identity.GetUserId();
                 Libro libro = libroRepository.GetByIsbn(isbn);
 
-                ItemCarrito itemsCarrito = db.ItemsCarrito.Include(e => e.Libro).FirstOrDefault(item => item.IdUser.Equals(userId) && item.Isbn.Equals(isbn));
-            
-                //Si no hay item del libro para ese usuario se crea
-                if (itemsCarrito==null && libro != null)
-                {
-                    db.ItemsCarrito.Add(new ItemCarrito(userId, libro, cantidad));
-                    db.Entry(libro).State = EntityState.Modified;
-                    db.SaveChanges() ;
-                
-                    return Json("true");
-                }
-                //Si existe un libro para el usuario
-                else if(libro!=null){
-                    db.Entry(itemsCarrito).State = EntityState.Modified;
-                    db.Entry(libro).State = EntityState.Modified;
+                if (libro != null) {
+                    ItemCarrito itemsCarrito = db.ItemsCarrito.Include(e => e.Libro).FirstOrDefault(item => item.IdUser.Equals(userId) && item.Libro.ISBN.Equals(libro.ISBN));
+                    //Si no hay item del libro para ese usuario se crea
+                    if (itemsCarrito == null)
+                    {
+                        db.ItemsCarrito.Add(new ItemCarrito(userId, libro, cantidad));
+                        db.Entry(libro).State = EntityState.Modified;
+                        db.SaveChanges();
 
-                    itemsCarrito.Cantidad += cantidad;
+                        return Json("true");
+                    }
+                    //Si existe un libro para el usuario
+                    else
+                    {
+                        db.Entry(itemsCarrito).State = EntityState.Modified;
+                        db.Entry(libro).State = EntityState.Modified;
 
-                    db.SaveChanges();
-                    return Json("true");
+                        itemsCarrito.Cantidad += cantidad;
+
+                        db.SaveChanges();
+                        return Json("true");
+                    }
                 }
-                    return Json("false");
+ 
             }
             return Json("false");
         }

@@ -11,6 +11,7 @@ namespace LibreriaJose.Models.Data
 {
     public class Libro:Producto{
         [Key]
+        public int Id { get; set; }
         [Required]
         [Index(IsUnique=true)]
         [StringLength(13,MinimumLength =13)]

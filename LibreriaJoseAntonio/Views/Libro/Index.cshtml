@@ -96,7 +96,7 @@
     @foreach (var item in Model)
     {
         <div class="container_product " >
-            <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.ISBN})">
+            <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
                 <img src="@item.Imagen" class="img-fluid product_img" />
                 <div class="info_book">
 
@@ -109,8 +109,8 @@
             </div>
             <div class="menu_info">
                 <div class="seguidos">
-                    @Html.ActionLink(" ", "Edit", new { id = item.ISBN }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
-                    @Html.ActionLink(" ", "Delete", new { id = item.ISBN }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
 
                 </div>
                 <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
