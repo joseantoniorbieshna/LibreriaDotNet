@@ -10,7 +10,15 @@ namespace LibreriaJoseAntonio.Models.Repository
 {
     public class LibroRepository : LibroDao
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        ApplicationDbContext db;
+        public LibroRepository()
+        {
+            this.db = new ApplicationDbContext();
+        }
+        public LibroRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         public List<Libro> GetAll()
         {

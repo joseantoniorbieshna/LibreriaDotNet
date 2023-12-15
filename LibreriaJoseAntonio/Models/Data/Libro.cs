@@ -32,8 +32,6 @@ namespace LibreriaJose.Models.Data
         [ForeignKey("Estado_id")]
         public int EstadoId { get; set; }
         public Estado Estado_id { get; set; }
-
-
         
     }
 }

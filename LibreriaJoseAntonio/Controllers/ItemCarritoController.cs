@@ -18,7 +18,10 @@ namespace LibreriaJoseAntonio.Controllers
     public class ItemCarritoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private LibroRepository libroRepository = new LibroRepository();
+        private LibroRepository libroRepository;
+        public ItemCarritoController() {
+            libroRepository=new LibroRepository(db);
+        }
 
         // GET: ItemCarrito
         public ActionResult Index()
@@ -161,6 +164,7 @@ namespace LibreriaJoseAntonio.Controllers
                 //Si existe un libro para el usuario
                 else if(libro!=null){
                     db.Entry(itemsCarrito).State = EntityState.Modified;
+                    db.Entry(libro).State = EntityState.Modified;
 
                     itemsCarrito.Cantidad += cantidad;
 

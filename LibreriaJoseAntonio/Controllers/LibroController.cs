@@ -58,7 +58,7 @@ namespace LibreriaJoseAntonio.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Libros.Add(libro);
+                db.Libros.Add(libro);   
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

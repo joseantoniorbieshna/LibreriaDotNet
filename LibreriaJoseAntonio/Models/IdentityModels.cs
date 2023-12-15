@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls.WebParts;
 using LibreriaJose.Models.Data;
 using LibreriaJoseAntonio.Models.Data;
 using Microsoft.AspNet.Identity;
@@ -33,6 +34,12 @@ namespace LibreriaJoseAntonio.Models
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Libro> Libros { get; set; }
         public DbSet<ItemCarrito> ItemsCarrito { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
