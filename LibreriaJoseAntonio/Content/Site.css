@@ -40,3 +40,8 @@ html {
     font: normal 'Work Sans';
     font-weight: lighter;
 }
+
+
+.product_img {
+    max-width: 15rem;
+}

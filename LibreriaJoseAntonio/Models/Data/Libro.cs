@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
@@ -18,19 +19,23 @@ namespace LibreriaJose.Models.Data
 
         [ForeignKey("Autor_id")]
         public int AutorId { get; set; }
+        [DisplayName("Autor")]
         public Autor Autor_id { get; set; }
 
 
         [ForeignKey("Editorial_id")]
         public int EditorialId { get; set; }
+        [DisplayName("Editorial")]
         public Editorial Editorial_id { get; set; }
 
         [ForeignKey("Formato_id")]
         public int FormatoId { get; set; }
+        [DisplayName("Formato")]
         public Formato Formato_id { get; set; }
 
         [ForeignKey("Estado_id")]
         public int EstadoId { get; set; }
+        [DisplayName("Estado")]
         public Estado Estado_id { get; set; }
         
     }

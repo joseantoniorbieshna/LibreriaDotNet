@@ -4,87 +4,54 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<style>
+    .detail{
+        display:flex;
+    }
+    .second-mid {
+        margin-left:3rem;
+    }
+    .mybutton {
+        margin:0;
+        background-color:transparent;
+        color:black;
+       
+    }
+    .container_cantidad {
+        display:flex;
+    }
+    .cantidad {
+        width:3rem;
+    }
+</style>
+
+<h2>Detalles</h2>
 
 <div>
     <h4>Libro</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </dt>
+    <dl class="detail">
+        <div class="first-mid">
+            <img src="@Model.Imagen" class="img-fluid product_img" />
+        </div>
+        <div class="second-mid">
 
-        <dd>
-            @Html.DisplayFor(model => model.ISBN)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Autor_id.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Autor_id.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Editorial_id.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Editorial_id.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado_id.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estado_id.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Formato_id.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Formato_id.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Imagen)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Imagen)
-        </dd>
-
-    </dl>
+            <p><b>@Html.DisplayNameFor(model => model.Titulo):</b> @Html.DisplayFor(model => model.Titulo)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Autor_id):</b> @Html.DisplayFor(model => model.Autor_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Editorial_id):</b> @Html.DisplayFor(model => model.Editorial_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Estado_id):</b> @Html.DisplayFor(model => model.Estado_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Formato_id):</b> @Html.DisplayFor(model => model.Formato_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.ISBN):</b> @Html.DisplayFor(model => model.ISBN)</p>
+            <div class="container_cantidad">
+                <button class="fa fa-minus mybutton"></button>
+                <input type="number" disabled class="cantidad"/>
+                <button class="fa fa-plus mybutton"></button>
+            </div>
+            
+        </div>
+    
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ISBN }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ISBN }) |
+    @Html.ActionLink("Volver a Inicio", "Index")
 </p>
