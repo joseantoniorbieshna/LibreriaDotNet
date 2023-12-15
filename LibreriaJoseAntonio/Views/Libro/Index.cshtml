@@ -16,8 +16,8 @@
         overflow: hidden;
         cursor:pointer;
         animation-duration: 500ms;
-        border: 1px solid black;
-        padding: 1.5rem 4rem 1.5rem 4rem;
+        border: 1px solid rgb(222, 222, 222);
+        padding: 2rem 2rem 0.5rem 2rem;
         position: relative;
     }
 
@@ -50,7 +50,7 @@
     .menu_info {
         cursor: default;
         background: linear-gradient(0deg, rgb(240, 240, 240) 0%,rgb(255, 255, 255,1) 60%, rgba(255,255,255,0.8) 100%);
-        padding: 0rem 0rem 2rem 0rem;
+        padding: 0rem 0rem 0.5rem 0rem;
         border-radius: 20px 20px 0px 00px;
         position: absolute;
         width: 100%;
@@ -106,8 +106,8 @@
                     <p class="title text-center"><b>@Html.DisplayFor(modelItem => item.Titulo)</b></p>
                     <p class="autor text-center"><b>@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</b></p>
                     <p class="editorial text-center"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
-                    <br />
                 </div>
+                <hr />
                 <p class="precio text-center">@Html.DisplayFor(modelItem => item.Precio)€</p>
             </div>
             <div class="menu_info">
