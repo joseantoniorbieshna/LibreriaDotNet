@@ -55,6 +55,16 @@ namespace LibreriaJoseAntonio.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ISBN,AutorId,EditorialId,FormatoId,EstadoId,Titulo,Precio,Cantidad,Imagen")] Libro libro)
         {
+            //Si el isbn ya existe, manda el error
+            if (db.Libros.Find(libro.ISBN)!=null) {
+                ModelState.AddModelError("ISBN", "El ISBN es ya existente");
+                ViewBag.AutorId = new SelectList(db.Autores, "Id", "Nombre", libro.AutorId);
+                ViewBag.EditorialId = new SelectList(db.Editoriales, "Id", "Nombre", libro.EditorialId);
+                ViewBag.EstadoId = new SelectList(db.Estados, "Id", "Nombre", libro.EstadoId);
+                ViewBag.FormatoId = new SelectList(db.Formatos, "Id", "Nombre", libro.FormatoId);
+                return View(libro);
+            }
+            
 
             if (ModelState.IsValid)
             {
