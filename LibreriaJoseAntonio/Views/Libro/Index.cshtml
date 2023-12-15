@@ -80,10 +80,13 @@
         color:white;
         background-color:black;
     }
-        .carrito-btn:active {
-            color: black;
-            background-color: white;
-        }
+    .carrito-btn:active {
+        color: black;
+        background-color: white;
+    }
+    #contenedorAlertas {
+        z-index:10;
+    }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
@@ -143,18 +146,22 @@ $(document).ready(function () {
         }).then(response => {
             return response.json();
         }).then(data => {
-            console.log("Ha ido bien, añadido libro.");
-            var idUnico = new Date().getTime();
-            var htmlAlerta = `<div id="alerta${idUnico}" class="alert alert-success" role="alert">Se ha añadido el libro al carrito</div>`;
-            $('#contenedorAlertas').append(htmlAlerta);
-            $(`#alerta${idUnico}`).fadeIn();
+            if (data == "true") {
+                console.log("Ha ido bien, añadido libro.");
+                var idUnico = new Date().getTime();
+                var htmlAlerta = `<div id="alerta${idUnico}" class="alert alert-success" role="alert">Se ha añadido el libro al carrito</div>`;
+                $('#contenedorAlertas').append(htmlAlerta);
+                $(`#alerta${idUnico}`).fadeIn();
 
-            setTimeout(function () {
-                $(`#alerta${idUnico}`).fadeOut(400, function () {
-                    $(this).remove();
-                });
-            }, 1000);
+                setTimeout(function () {
+                    $(`#alerta${idUnico}`).fadeOut(400, function () {
+                        $(this).remove();
+                    });
+                }, 1000);
 
+            } else {
+                console.log("No se ha podido agregar")
+            }
 
         }).catch(err => {
             console.error('Error durante la solicitud', err);
