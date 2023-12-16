@@ -87,6 +87,21 @@
 <script>
 
 
+    function addAlert(typeAlert, mensaje) {
+        console.log("Alerta.");
+        var idUnico = new Date().getTime();
+        var htmlAlerta = `<div id="alerta${idUnico}" class="alert ${typeAlert}" role="alert">${mensaje}</div>`;
+        $('#contenedorAlertas').append(htmlAlerta);
+        $(`#alerta${idUnico}`).fadeIn();
+
+        setTimeout(function () {
+            $(`#alerta${idUnico}`).fadeOut(400, function () {
+                $(this).remove();
+            });
+        }, 1000);
+    }
+
+
     $(document).ready(function () {
 
         // clic para todos los elementos con la clase "sumar"
@@ -142,22 +157,17 @@
             //Si salio bien
             if (data == "true") {
                 console.log("Ha ido bien, añadido libro.");
-                var idUnico = new Date().getTime();
-                var htmlAlerta = `<div id="alerta${idUnico}" class="alert alert-success" role="alert">Se ha añadido ${cantidad} libros al carrito</div>`;
-                $('#contenedorAlertas').append(htmlAlerta);
-                $(`#alerta${idUnico}`).fadeIn();
-
-                setTimeout(function () {
-                    $(`#alerta${idUnico}`).fadeOut(400, function () {
-                        $(this).remove();
-                    });
-                }, 1000);
+                addAlert("alert-success", `Se ha añadido ${cantidad} libros al carrito`);
 
                 //Setear valores
                 cantidadMaxima -= cantidad;
                 $(".cantidad-carrito").val(0);
                 $(".cantidad-data").text(`${cantidadMaxima}`);
 
+            } else if (data == "outStock") {
+                addAlert("alert-danger", "Fuera de Stock.");
+            } else if (data == "full") {
+                addAlert("alert-warning", "Carrito Lleno");
             } else {
                 console.log("No se ha podido agregar")
             }
