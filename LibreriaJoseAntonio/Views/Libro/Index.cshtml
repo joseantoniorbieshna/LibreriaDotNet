@@ -105,7 +105,7 @@
 <div class="all_product">
     @foreach (var item in Model)
     {
-        <div class="container_product " >
+        <div class="container_product ">
             <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
                 <img src="@item.Imagen" class="img-fluid ancho" />
                 <div class="info_book ancho">

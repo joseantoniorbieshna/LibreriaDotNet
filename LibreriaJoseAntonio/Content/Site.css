@@ -42,3 +42,19 @@ html {
 }
 
 
+
+.navegacion-container {
+    background-color: #5F0F40;
+    color: white;
+}
+
+    .navegacion-container * {
+        color: white;
+    }
+
+.nav-opt:hover {
+    color: #FB8B24;
+}
+.nav-opt:active {
+    color: #9A031E;
+}

@@ -8,28 +8,27 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navegacion-container">
         <div class="container">
-            @Html.ActionLink("Libreria Jose Antonio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Libreria Jose Antonio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand nav-opt" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Libro", "Index", "Libro", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Estado", "Index", "Estado", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Editorial", "Index", "Editorial", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Formato", "Index", "Formato", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Autor", "Index", "Autor", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Carrito", "Index", "ItemCarrito", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Libro", "Index", "Libro", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Estado", "Index", "Estado", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Editorial", "Index", "Editorial", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Formato", "Index", "Formato", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Autor", "Index", "Autor", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    <li>@Html.ActionLink("Carrito", "Index", "ItemCarrito", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")
