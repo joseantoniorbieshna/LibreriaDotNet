@@ -30,24 +30,25 @@
     .container_cantidad {
         display: flex;
     }
-    .cantidad {
-        width:4rem;
-        text-align:center;
+    .cantidad-carrito {
+        width: 4rem;
+        text-align: center;
     }
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
-    .add-carrito {
-        width:3rem;
-        height:3rem;
-        font-size:1.5rem;
-        margin-top:1rem;
+    .carrito-btn {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        margin-top: 1rem;
     }
 
 
 </style>
+<div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
 <h2>Detalles</h2>
 
@@ -60,20 +61,20 @@
         </div>
         <div class="second-mid">
 
-            <p><b>@Html.DisplayNameFor(model => model.Titulo):</b> @Html.DisplayFor(model => model.Titulo)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Autor_id):</b> @Html.DisplayFor(model => model.Autor_id.Nombre)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Editorial_id):</b> @Html.DisplayFor(model => model.Editorial_id.Nombre)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Estado_id):</b> @Html.DisplayFor(model => model.Estado_id.Nombre)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Formato_id):</b> @Html.DisplayFor(model => model.Formato_id.Nombre)</p>
-            <p><b>@Html.DisplayNameFor(model => model.ISBN):</b> @Html.DisplayFor(model => model.ISBN)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Cantidad):</b> @Html.DisplayFor(model => model.Cantidad)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Titulo): </b>@Html.DisplayFor(model => model.Titulo)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Autor_id): </b>@Html.DisplayFor(model => model.Autor_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Editorial_id): </b>@Html.DisplayFor(model => model.Editorial_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Estado_id): </b>@Html.DisplayFor(model => model.Estado_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Formato_id): </b>@Html.DisplayFor(model => model.Formato_id.Nombre)</p>
+            <p><b>@Html.DisplayNameFor(model => model.ISBN): </b>@Html.DisplayFor(model => model.ISBN)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Cantidad): </b><span class="cantidad-data">@Html.DisplayFor(model => model.Cantidad)</span></p>
             <div class="carrito-edit-container">
                 <div class="container_cantidad">
-                    <button class="fa fa-minus mybutton"></button>
-                    <input type="number" min="0" disabled max="999" class="cantidad" value="0" />
-                    <button class="fa fa-plus mybutton"></button>
+                    <button class="fa fa-minus mybutton restar"></button>
+                    <input type="number" min="0" disabled max="999" class="cantidad-carrito" value="0" />
+                    <button class="fa fa-plus mybutton sumar"></button>
                 </div>
-                <button class="fa fa-shopping-cart add-carrito"></button>
+                <button class="fa fa-shopping-cart carrito-btn"></button>
             </div>
         </div>
     
@@ -82,3 +83,100 @@
     @Html.ActionLink("Editar", "Edit", new { id = Model.ISBN }) |
     @Html.ActionLink("Volver a Inicio", "Index")
 </p>
+
+<script>
+
+
+    $(document).ready(function () {
+
+        // clic para todos los elementos con la clase "sumar"
+        $(".sumar").click(function () {
+            var cantidadMaxima = parseInt( $(".cantidad-data").text());
+            var cantidad = parseInt($(".cantidad-carrito").val());
+
+            if (cantidad < cantidadMaxima) {
+                cantidad++;
+                $(".cantidad-carrito").val(cantidad);
+            }
+        });
+
+        // clic para todos los elementos con la clase "restar"
+        $(".restar").click(function () {
+            var cantidad = parseInt($(".cantidad-carrito").val());
+            if (cantidad > 0) {
+                cantidad--;
+                $(".cantidad-carrito").val(cantidad);
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+    $(document).ready(function () {
+    // clic para los botones de carrito
+    $(".carrito-btn").click(function () {
+        var isbn = @Html.DisplayFor(model => model.ISBN);
+        var cantidad = parseInt($(".cantidad-carrito").val());
+        var cantidadMaxima = parseInt($(".cantidad-data").text());
+
+        // Realiza la solicitud directamente aquí
+        fetch('@Url.Action("AgregarItem", "ItemCarrito")', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                isbn: isbn,
+                cantidad: cantidad,
+                remplazar: true
+            })
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+
+            //Si salio bien
+            if (data == "true") {
+                console.log("Ha ido bien, añadido libro.");
+                var idUnico = new Date().getTime();
+                var htmlAlerta = `<div id="alerta${idUnico}" class="alert alert-success" role="alert">Se ha añadido ${cantidad} libros al carrito</div>`;
+                $('#contenedorAlertas').append(htmlAlerta);
+                $(`#alerta${idUnico}`).fadeIn();
+
+                setTimeout(function () {
+                    $(`#alerta${idUnico}`).fadeOut(400, function () {
+                        $(this).remove();
+                    });
+                }, 1000);
+
+                //Setear valores
+                cantidadMaxima -= cantidad;
+                $(".cantidad-carrito").val(0);
+                $(".cantidad-data").text(`${cantidadMaxima}`);
+
+            } else {
+                console.log("No se ha podido agregar")
+            }
+
+        }).catch(err => {
+            console.error('Error durante la solicitud', err);
+        });
+    });
+});
+
+
+
+    $(document).ready(function () {
+        // clic para todos los divs con la clase "redireccion"
+        $(".redireccion").click(function () {
+            // Obtiene la URL específica del div clicado
+            var url = $(this).data("url");
+            window.location.href = url;
+        });
+    });
+
+</script>

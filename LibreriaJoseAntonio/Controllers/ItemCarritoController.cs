@@ -144,11 +144,13 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         [HttpPost]
-        public JsonResult AgregarItem(string isbn,int cantidad) {
+        public JsonResult AgregarItem(string isbn,int cantidad, bool remplazar) {
             if (User.Identity.IsAuthenticated) { 
                 //Libro libro = db.Libros;
                 string userId = User.Identity.GetUserId();
                 Libro libro = libroRepository.GetByIsbn(isbn);
+
+                if (cantidad == 0) { return Json(false); }
 
                 if (libro != null) {
                     ItemCarrito itemsCarrito = db.ItemsCarrito.Include(e => e.Libro).FirstOrDefault(item => item.IdUser.Equals(userId) && item.Libro.ISBN.Equals(libro.ISBN));
@@ -167,7 +169,16 @@ namespace LibreriaJoseAntonio.Controllers
                         db.Entry(itemsCarrito).State = EntityState.Modified;
                         db.Entry(libro).State = EntityState.Modified;
 
-                        itemsCarrito.Cantidad += cantidad;
+                        //Remplazar o Añadir
+                        if (remplazar)
+                        {
+                            itemsCarrito.Cantidad = cantidad;
+                        }
+                        else {
+                            itemsCarrito.Cantidad += cantidad;
+                        }
+
+                       
 
                         db.SaveChanges();
                         return Json("true");

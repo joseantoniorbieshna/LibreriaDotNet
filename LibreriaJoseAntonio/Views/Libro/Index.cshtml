@@ -103,7 +103,6 @@
 </p>
 
 <div class="all_product">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @foreach (var item in Model)
     {
         <div class="container_product " >
@@ -149,7 +148,8 @@ $(document).ready(function () {
             },
             body: JSON.stringify({
                 isbn: isbn,
-                cantidad: 1
+                cantidad: 1,
+                remplazar: false
             })
         }).then(response => {
             return response.json();
