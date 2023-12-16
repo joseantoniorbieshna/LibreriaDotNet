@@ -8,8 +8,11 @@
     .detail{
         display:flex;
     }
+    .product_img {
+        max-width: 17rem;
+    }
     .second-mid {
-        margin-left:3rem;
+        margin-left:2.5rem;
         padding-top:1rem;
     }
     .mybutton {
@@ -18,12 +21,32 @@
         color:black;
        
     }
+    .carrito-edit-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+    }
     .container_cantidad {
-        display:flex;
+        display: flex;
     }
     .cantidad {
-        width:3rem;
+        width:4rem;
+        text-align:center;
     }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .add-carrito {
+        width:3rem;
+        height:3rem;
+        font-size:1.5rem;
+        margin-top:1rem;
+    }
+
+
 </style>
 
 <h2>Detalles</h2>
@@ -43,12 +66,15 @@
             <p><b>@Html.DisplayNameFor(model => model.Estado_id):</b> @Html.DisplayFor(model => model.Estado_id.Nombre)</p>
             <p><b>@Html.DisplayNameFor(model => model.Formato_id):</b> @Html.DisplayFor(model => model.Formato_id.Nombre)</p>
             <p><b>@Html.DisplayNameFor(model => model.ISBN):</b> @Html.DisplayFor(model => model.ISBN)</p>
-            <div class="container_cantidad">
-                <button class="fa fa-minus mybutton"></button>
-                <input type="number" disabled class="cantidad"/>
-                <button class="fa fa-plus mybutton"></button>
+            <p><b>@Html.DisplayNameFor(model => model.Cantidad):</b> @Html.DisplayFor(model => model.Cantidad)</p>
+            <div class="carrito-edit-container">
+                <div class="container_cantidad">
+                    <button class="fa fa-minus mybutton"></button>
+                    <input type="number" min="0" disabled max="999" class="cantidad" value="0" />
+                    <button class="fa fa-plus mybutton"></button>
+                </div>
+                <button class="fa fa-shopping-cart add-carrito"></button>
             </div>
-            
         </div>
     
 </div>

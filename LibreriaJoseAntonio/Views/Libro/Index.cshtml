@@ -6,6 +6,9 @@
 }
 <style>
 
+    .ancho {
+        max-width: 15rem;
+    }
     .all_product {
         display: flex;
         flex-wrap: wrap;
@@ -84,6 +87,14 @@
     #contenedorAlertas {
         z-index:10;
     }
+    .important_text {
+        font-weight:bold;
+    }
+    .mydata {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
@@ -97,15 +108,15 @@
     {
         <div class="container_product " >
             <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
-                <img src="@item.Imagen" class="img-fluid product_img" />
-                <div class="info_book">
+                <img src="@item.Imagen" class="img-fluid ancho" />
+                <div class="info_book ancho">
 
-                    <p class="title text-center"><b>@Html.DisplayFor(modelItem => item.Titulo)</b></p>
-                    <p class="autor text-center"><b>@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</b></p>
-                    <p class="editorial text-center"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
+                    <p class="title text-center important_text mydata">@Html.DisplayFor(modelItem => item.Titulo)</p>
+                    <p class="autor text-center important_text mydata">@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</p>
+                    <p class="editorial text-center mydata"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
                 </div>
                 <hr />
-                <p class="precio text-center">@Html.DisplayFor(modelItem => item.Precio)€</p>
+                <p class="precio text-center mydata">@Html.DisplayFor(modelItem => item.Precio)€</p>
             </div>
             <div class="menu_info">
                 <div class="seguidos">

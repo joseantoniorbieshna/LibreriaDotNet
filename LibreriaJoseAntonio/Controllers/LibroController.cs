@@ -24,13 +24,13 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         // GET: Libro/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Libro libro = libroRepository.GetByIsbn(id);
+            Libro libro = libroRepository.GetById(id);
             if (libro == null)
             {
                 return HttpNotFound();
