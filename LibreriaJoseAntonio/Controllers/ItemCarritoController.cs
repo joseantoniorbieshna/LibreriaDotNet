@@ -26,8 +26,12 @@ namespace LibreriaJoseAntonio.Controllers
         // GET: ItemCarrito
         public ActionResult Index()
         {
+            ViewBag.Total = 0f;
             if (User.Identity.IsAuthenticated) {
-                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro);
+                string idUsuarioActual = User.Identity.GetUserId();
+                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro).Where( libro=>libro.IdUser.Equals(idUsuarioActual) );
+                float total=itemsCarrito.ToList().Sum(libro => libro.calcularTotal());
+                ViewBag.Total = total;
                 return View(itemsCarrito.ToList());
             }
             return View(new List<ItemCarrito>());

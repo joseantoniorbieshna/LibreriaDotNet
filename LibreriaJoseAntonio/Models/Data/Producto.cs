@@ -12,6 +12,7 @@ namespace LibreriaJose.Models.Data
         public string Titulo { get; set; }
         public float Precio { get; set; }
         public int Cantidad { get; set; }
+
         [Display(Name ="Introduce un URL:")]
         public string Imagen {  get; set; } 
 

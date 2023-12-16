@@ -25,5 +25,9 @@ namespace LibreriaJoseAntonio.Models.Data
         public Libro Libro { get; set; }
         public int Cantidad { get; set; }
         public string IdUser { get; set; }
+
+        public float calcularTotal() { 
+            return Cantidad*Libro.Precio;
+        }
     }
 }

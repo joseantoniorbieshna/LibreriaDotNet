@@ -40,6 +40,9 @@ html {
     font: normal 'Work Sans';
     font-weight: lighter;
 }
+body {
+    background-color: white;
+}
 
 
 
