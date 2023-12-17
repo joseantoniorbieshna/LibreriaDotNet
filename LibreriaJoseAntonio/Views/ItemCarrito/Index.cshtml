@@ -13,10 +13,11 @@
         grid-template-columns: 1fr 1fr 1fr;
         justify-items: center;
         align-items:center;
+        gap:1rem;
     }
 
     .info_container {
-        max-width: 20rem;
+        width: 18rem;
         justify-self: start;
     }
     .mydata {
@@ -49,6 +50,15 @@
         align-items: center;
         gap:1rem;
     }
+    .euro {
+        font-weight:normal
+    }
+
+    .result {
+        display:flex;
+        justify-content:end;
+        margin:1rem;
+    }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 <h2>Lista Carrito</h2>
@@ -68,14 +78,14 @@
             <div class="info_container" data-isbn="@item.Libro.ISBN" data-cantidadmaxima="@item.Libro.Cantidad">
                 <p class="mydata">Titulo: <span class="titulo db_data">@item.Libro.Titulo</span></p>
                 <p class="mydata">Autor: <span class="autor db_data">@item.Libro.Autor_id.Nombre</span></p>
-                <p class="mydata">Precio: <span class="precio db_data">@item.Libro.Precio€</span></p>
+                <p class="mydata">Precio: <span class="precio db_data">@item.Libro.Precio</span><span class="euro">€</span></p>
                 <p class="mydata">Cantidad: <span class="cantidad db_data">@item.Cantidad</span></p>
             </div>
 
             <div class="container_carrito_detail">
                 <div class="container_cantidad">
                     <button class="fa fa-minus mybutton restar"></button>
-                    <input type="number" min="0" disabled max="999" class="cantidad-carrito" value="@item.Cantidad" />
+                    <input type="number" min="0" max="999" class="cantidad-carrito" value="@item.Cantidad" />
                     <button class="fa fa-plus mybutton sumar"></button>
                 </div>
                 <div class="container_link">
@@ -88,8 +98,9 @@
     }
     <hr />
 </div>
-
-<div class="mydata">Total: <span class="total db_data">@ViewBag.Total</span></div>
+<div class="result">
+    <div class="mydata">Total: <span class="total db_data">@ViewBag.Total</span><span class="euro">€</span></div>
+</div>
 
 
 
@@ -204,5 +215,55 @@ async function request(isbn,cantidad) {
                 }
             });
         });
+
+    $(document).ready(function () {
+        // clic para todos los elementos con la clase "restar"
+        $(".restar").click(async function () {
+            var padre = $(this).closest(".container_product");
+            var cantidad = parseInt(padre.find(".cantidad-carrito").val(), 10);
+            var isbn = padre.find(".info_container").data("isbn");
+
+            var response = await request(isbn, cantidad - 1);
+
+            if (cantidad > 1 && response) {
+                cantidad--;
+                padre.find(".cantidad-carrito").val(cantidad);
+                padre.find(".cantidad").text(`${cantidad}`);
+                calcularTotal();
+            }
+        });
+    });
+
+
+
+
+
+
+    $(document).ready(function () {
+        var antesInput = 0;
+        $(".cantidad-carrito").on("click",async function () {
+            antesInput = parseInt($(this).val())
+
+        });
+        $(".cantidad-carrito").on("change",async function () {
+            var padre = $(this).closest(".container_product");
+            var cantidad = parseInt(padre.find(".cantidad-carrito").val(), 10);
+
+            var isbn = padre.find(".info_container").data("isbn");
+
+            if (cantidad >= 1 && (await request(isbn, cantidad)) == true) {
+                padre.find(".cantidad-carrito").val(cantidad);
+                padre.find(".cantidad").text(`${cantidad}`);
+                calcularTotal();
+                antesInput = cantidad
+            } else {
+                padre.find(".cantidad-carrito").val(antesInput);
+            }
+
+        });
+    });
+
+
+
 
 </script>

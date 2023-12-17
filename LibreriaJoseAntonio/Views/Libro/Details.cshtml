@@ -80,7 +80,7 @@
             <div class="carrito-edit-container">
                 <div class="container_cantidad">
                     <button class="fa fa-minus mybutton restar"></button>
-                    <input type="number" min="0" disabled max="999" class="cantidad-carrito" value="0" />
+                    <input type="number" min="0" max="999" class="cantidad-carrito" value="0" />
                     <button class="fa fa-plus mybutton sumar"></button>
                 </div>
                 <button class="fa fa-shopping-cart carrito-btn"></button>
@@ -168,7 +168,7 @@
                 console.log("Ha ido bien, añadido libro.");
                 cantidad == 1 ? addAlert("alert-success", `Se ha añadido ${cantidad} libro al carrito`) :
                     addAlert("alert-success", `Se ha añadido ${cantidad} libros al carrito`);
-                
+
 
                 //Setear valores
                 cantidadMaxima -= cantidad;
@@ -198,6 +198,32 @@
             // Obtiene la URL específica del div clicado
             var url = $(this).data("url");
             window.location.href = url;
+        });
+    });
+
+
+
+
+
+
+
+    $(document).ready(function () {
+        var antesInput = 0;
+        $(".cantidad-carrito").on("click", async function () {
+            antesInput = parseInt($(this).val())
+
+        });
+        $(".cantidad-carrito").on("change", async function () {
+            var cantidad = parseInt($(".cantidad-carrito").val());
+            var cantidadMaxima = parseInt($(".cantidad-data").text());
+
+            if (cantidad >= 1 && cantidad<= cantidadMaxima) {
+                $(this).val(cantidad);
+                antesInput = cantidad
+            } else {
+                $(this).val(antesInput);
+            }
+
         });
     });
 
