@@ -90,7 +90,10 @@
     .important_text {
         font-weight:bold;
     }
-
+    .nologin {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
@@ -114,14 +117,27 @@
                 <p class="precio text-center mydata">@Html.DisplayFor(modelItem => item.Precio)€</p>
             </div>
             <div class="menu_info">
-                <div class="seguidos">
-                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
-                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
+                @if (User.IsInRole("Administrador"))
+                {
+                    <div class="seguidos">
 
-                </div>
-                <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
-                    <i class="" fa fa-shopping-cart"></i> Añadir al carrito
-                </button>
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
+
+
+
+                    </div>
+
+                    <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
+                        <i class="" fa fa-shopping-cart"></i> Añadir al carrito
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="carrito-btn fa fa-shopping-cart nologin" data-isbn="@item.ISBN">
+                        <i class="" fa fa-shopping-cart"></i> Añadir al carrito
+                    </button>
+                }
 
             </div>
 

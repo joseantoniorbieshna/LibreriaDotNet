@@ -88,10 +88,13 @@
                     <input type="number" min="0" max="999" class="cantidad-carrito" value="@item.Cantidad" />
                     <button class="fa fa-plus mybutton sumar"></button>
                 </div>
-                <div class="container_link">
-                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit btn btn-outline-warning" })
-                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
-                </div>
+                @if (User.IsInRole("Administrador"))
+                {
+                    <div class="container_link">
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit btn btn-outline-warning" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
+                    </div>
+                }
             </div>
         </div>
 

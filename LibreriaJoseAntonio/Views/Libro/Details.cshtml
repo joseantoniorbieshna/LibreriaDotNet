@@ -88,10 +88,13 @@
         </div>
     
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Volver a Inicio", "Index")
-</p>
+    <p>
+        @if (User.IsInRole("Administrador"))
+        {
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id })<span>|</span>
+        }
+        @Html.ActionLink("Volver a Inicio", "Index")
+    </p>
 
 <script>
 
