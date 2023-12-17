@@ -6,34 +6,40 @@
 
 <style>
     .my_img {
-        max-width:10rem;
+        max-width: 10rem;
     }
+
     .container_product {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         justify-items: center;
-        align-items:center;
-        gap:1rem;
+        align-items: center;
+        gap: 1rem;
     }
 
     .info_container {
         width: 18rem;
         justify-self: start;
     }
+
     .mydata {
-        font-weight:bold;
+        font-weight: bold;
     }
+
     .db_data {
-       font-weight:normal;
+        font-weight: normal;
     }
+
     .mybutton {
         margin: 0;
         background-color: transparent;
         color: black;
     }
+
     .container_cantidad {
         display: flex;
     }
+
     .cantidad-carrito {
         width: 4rem;
         text-align: center;
@@ -44,20 +50,22 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
     .container_carrito_detail {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap:1rem;
+        gap: 1rem;
     }
+
     .euro {
-        font-weight:normal
+        font-weight: normal
     }
 
     .result {
-        display:flex;
-        justify-content:end;
-        margin:1rem;
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem;
     }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
@@ -85,15 +93,15 @@
                     <input type="number" min="0" max="999" class="cantidad-carrito" value="@item.Cantidad" />
                     <button class="fa fa-plus mybutton sumar"></button>
                 </div>
-             
+
                 <div class="container_link">
                     @if (User.IsInRole("Administrador"))
                     {
                         @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit btn btn-outline-warning" })
                     }
-                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
-                    </div>
-               
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
+                </div>
+
             </div>
         </div>
 
@@ -101,12 +109,14 @@
     <hr />
 </div>
 <div class="result">
+    @* @Html.ActionLink("Comprar", "Comprar", null, new { @class = "btn btn-outline-success" })*@
     <div class="mydata">Total: <span class="total db_data">@ViewBag.Total</span><span class="euro">€</span></div>
 </div>
 
 
 
 <script>
+
 
     function addAlert(typeAlert, mensaje) {
         console.log("Alerta.");
@@ -176,7 +186,7 @@ async function request(isbn,cantidad) {
         }).catch(err => {
             console.error('Error durante la solicitud de calcular total', err);
         });
-    
+
     }
 
 
@@ -268,4 +278,13 @@ async function request(isbn,cantidad) {
 
 
 
+
 </script>
+
+@if (ViewBag.error != null)
+{
+    <script>
+        addAlert("alert-danger", @ViewBag.errores);
+    </script>
+    
+}

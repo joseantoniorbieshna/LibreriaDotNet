@@ -26,6 +26,7 @@ namespace LibreriaJoseAntonio.Controllers
         // GET: ItemCarrito
         public ActionResult Index()
         {
+
             ViewBag.Total = 0f;
             if (User.Identity.IsAuthenticated) {
                 string idUsuarioActual = User.Identity.GetUserId();
@@ -42,6 +43,33 @@ namespace LibreriaJoseAntonio.Controllers
             }
             return View(new List<ItemCarrito>());
             
+        }
+
+
+        public ActionResult Comprar()
+        {
+                if (User.Identity.IsAuthenticated) {
+                    string idUsuarioActual = User.Identity.GetUserId();
+
+                    var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro)
+                              .Where(libro => libro.IdUser.Equals(idUsuarioActual)).ToList();
+               
+                foreach (var item in itemsCarrito){
+                        Libro libro = libroRepository.GetById(item.Id_libro);
+
+                        db.Entry(libro).State = EntityState.Modified;
+                        if (item.Cantidad > libro.Cantidad) {
+                            ViewBag.error = "EL libro " + libro.Titulo + " no cumple los requisitos";
+                            return RedirectToAction("Index");
+                        }
+                        libro.Cantidad -= item.Cantidad;
+                    }
+
+
+                    db.SaveChanges();
+
+                }
+            return RedirectToAction("Index");
         }
         // GET: ItemCarritoes/Details/5
         public ActionResult Details(int? id)
