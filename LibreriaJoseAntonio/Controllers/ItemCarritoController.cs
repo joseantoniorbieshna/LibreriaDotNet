@@ -59,6 +59,7 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         // GET: ItemCarritoes/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             ViewBag.Id_libro = new SelectList(db.Libros, "Id", "ISBN");
@@ -70,6 +71,7 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create([Bind(Include = "Id,Id_libro,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)
@@ -84,6 +86,7 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
         // GET: ItemCarritoes/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,6 +107,7 @@ namespace LibreriaJoseAntonio.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit([Bind(Include = "Id,Id_libro,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)

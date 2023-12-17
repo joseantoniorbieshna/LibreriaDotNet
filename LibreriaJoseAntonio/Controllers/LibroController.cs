@@ -65,7 +65,14 @@ namespace LibreriaJoseAntonio.Controllers
                 ViewBag.FormatoId = new SelectList(db.Formatos, "Id", "Nombre", libro.FormatoId);
                 return View(libro);
             }
-            
+            if (!remoteFileExists(libro.Imagen)) {
+                ModelState.AddModelError("Imagen", "El url introducido no es valido.");
+                ViewBag.AutorId = new SelectList(db.Autores, "Id", "Nombre", libro.AutorId);
+                ViewBag.EditorialId = new SelectList(db.Editoriales, "Id", "Nombre", libro.EditorialId);
+                ViewBag.EstadoId = new SelectList(db.Estados, "Id", "Nombre", libro.EstadoId);
+                ViewBag.FormatoId = new SelectList(db.Formatos, "Id", "Nombre", libro.FormatoId);
+                return View(libro);
+            }
 
             if (ModelState.IsValid)
             {
@@ -160,14 +167,13 @@ namespace LibreriaJoseAntonio.Controllers
         }
 
 
-        private bool RemoteFileExists(string url)
+        private bool remoteFileExists(string url)
         {
             try
             {
                 //Creamos el HttpWebRequest
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                //ajustamos a Head, aunque también se puede GET
-                request.Method = "HEAD";
+                request.Method = "GET";
                 //Obtenemos la respuesta we.
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
                 //Retorna verdadero si el status code == 200

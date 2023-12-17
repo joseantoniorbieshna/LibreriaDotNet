@@ -11,6 +11,7 @@ using LibreriaJoseAntonio.Models;
 
 namespace LibreriaJoseAntonio.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class FormatoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

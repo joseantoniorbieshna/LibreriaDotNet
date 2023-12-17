@@ -63,9 +63,6 @@
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 <h2>Lista Carrito</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <div class="container_all">
     @foreach (var item in Model)
     {
@@ -88,13 +85,15 @@
                     <input type="number" min="0" max="999" class="cantidad-carrito" value="@item.Cantidad" />
                     <button class="fa fa-plus mybutton sumar"></button>
                 </div>
-                @if (User.IsInRole("Administrador"))
-                {
-                    <div class="container_link">
+             
+                <div class="container_link">
+                    @if (User.IsInRole("Administrador"))
+                    {
                         @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit btn btn-outline-warning" })
+                    }
                         @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
                     </div>
-                }
+               
             </div>
         </div>
 

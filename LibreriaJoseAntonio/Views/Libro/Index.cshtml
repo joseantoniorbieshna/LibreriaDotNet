@@ -2,13 +2,14 @@
 
 @{
     ViewBag.Title = "Index";
-    
+
 }
 <style>
 
     .ancho {
         max-width: 15rem;
     }
+
     .all_product {
         display: flex;
         flex-wrap: wrap;
@@ -17,7 +18,7 @@
 
     .container_product {
         overflow: hidden;
-        cursor:pointer;
+        cursor: pointer;
         animation-duration: 500ms;
         border: 1px solid rgb(222, 222, 222);
         padding: 2rem 2rem 0.5rem 2rem;
@@ -73,23 +74,28 @@
     }
 
     .carrito-btn {
-        background-color:transparent;
-        height:3rem;
+        background-color: transparent;
+        height: 3rem;
     }
-    .carrito-btn:hover {
-        color:white;
-        background-color:black;
-    }
-    .carrito-btn:active {
-        color: black;
-        background-color: white;
-    }
+
+        .carrito-btn:hover {
+            color: white;
+            background-color: black;
+        }
+
+        .carrito-btn:active {
+            color: black;
+            background-color: white;
+        }
+
     #contenedorAlertas {
-        z-index:10;
+        z-index: 10;
     }
+
     .important_text {
-        font-weight:bold;
+        font-weight: bold;
     }
+
     .nologin {
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -97,54 +103,56 @@
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
 
-<p>
-    @Html.ActionLink("Crear Nuevo", "Create")
-</p>
+@if (User.IsInRole("Administrador"))
+{
+    <p>
+        @Html.ActionLink("Crear Nuevo", "Create")
+    </p>
+}
+    <div class="all_product">
+        @foreach (var item in Model)
+        {
+            <div class="container_product ">
+                <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
+                    <img src="@item.Imagen" class="img-fluid ancho" />
+                    <div class="info_book ancho">
 
-<div class="all_product">
-    @foreach (var item in Model)
-    {
-        <div class="container_product ">
-            <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
-                <img src="@item.Imagen" class="img-fluid ancho" />
-                <div class="info_book ancho">
-
-                    <p class="title text-center important_text mydata">@Html.DisplayFor(modelItem => item.Titulo)</p>
-                    <p class="autor text-center important_text mydata">@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</p>
-                    <p class="editorial text-center mydata"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
-                </div>
-                <hr />
-                <p class="precio text-center mydata">@Html.DisplayFor(modelItem => item.Precio)€</p>
-            </div>
-            <div class="menu_info">
-                @if (User.IsInRole("Administrador"))
-                {
-                    <div class="seguidos">
-
-                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
-                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
-
-
-
+                        <p class="title text-center important_text mydata">@Html.DisplayFor(modelItem => item.Titulo)</p>
+                        <p class="autor text-center important_text mydata">@Html.DisplayFor(modelItem => item.Autor_id.Nombre)</p>
+                        <p class="editorial text-center mydata"> @Html.DisplayFor(modelItem => item.Editorial_id.Nombre)</p>
                     </div>
+                    <hr />
+                    <p class="precio text-center mydata">@Html.DisplayFor(modelItem => item.Precio)€</p>
+                </div>
+                <div class="menu_info">
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <div class="seguidos">
 
-                    <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
-                        <i class="" fa fa-shopping-cart"></i> Añadir al carrito
-                    </button>
-                }
-                else
-                {
-                    <button type="button" class="carrito-btn fa fa-shopping-cart nologin" data-isbn="@item.ISBN">
-                        <i class="" fa fa-shopping-cart"></i> Añadir al carrito
-                    </button>
-                }
+                            @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit mybutton btn btn-outline-warning btn-lg" })
+                            @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash mybutton btn btn-outline-danger btn-lg" })
+
+
+
+                        </div>
+
+                        <button type="button" class="carrito-btn fa fa-shopping-cart" data-isbn="@item.ISBN">
+                            <i class="" fa fa-shopping-cart"></i> Añadir al carrito
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="carrito-btn fa fa-shopping-cart nologin" data-isbn="@item.ISBN">
+                            <i class="" fa fa-shopping-cart"></i> Añadir al carrito
+                        </button>
+                    }
+
+                </div>
 
             </div>
-
-        </div>
-    }
-</div>
-<script>
+        }
+    </div>
+    <script>
 
     function addAlert(typeAlert,mensaje) {
         console.log("Alerta.");
@@ -164,7 +172,7 @@ $(document).ready(function () {
     // clic para los botones de carrito
     $(".carrito-btn").click(function () {
         var isbn = $(this).data("isbn");
-        
+
 
         // Realiza la solicitud directamente aquí
         fetch('@Url.Action("AgregarItem", "ItemCarrito")', {
@@ -210,5 +218,5 @@ $(document).ready(function () {
             window.location.href = url;
         });
     });
-</script>
+    </script>
 
