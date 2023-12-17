@@ -1,5 +1,4 @@
 ﻿using LibreriaJose.Models.Data;
-using LibreriaJose.Models.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +7,7 @@ using System.Web;
 
 namespace LibreriaJoseAntonio.Models.Repository
 {
-    public class LibroRepository : LibroDao
+    public class LibroRepository 
     {
         ApplicationDbContext db;
         public LibroRepository()

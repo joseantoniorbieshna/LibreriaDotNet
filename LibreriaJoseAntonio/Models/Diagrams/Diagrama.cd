@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LibreriaJose.Models.Data.Libro">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <AssociationLine Name="Formato_id" Type="LibreriaJose.Models.Data.Formato" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.5" Y="3.312" />
+        <Point X="7.678" Y="3.312" />
+        <Point X="7.678" Y="2.335" />
+        <Point X="9.5" Y="2.335" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gAACCAEGAQAAAAAAAAAAAAEIAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\Data\Libro.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Editorial_id" />
+      <Property Name="Autor_id" />
+      <Property Name="Formato_id" />
+      <Property Name="Estado_id" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LibreriaJose.Models.Data.Producto" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAQAAAAABAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Data\Producto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibreriaJose.Models.Data.Autor" Collapsed="true">
+    <Position X="9.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Data\Autor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibreriaJose.Models.Data.Editorial" Collapsed="true">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Data\Editorial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibreriaJose.Models.Data.Estado" Collapsed="true">
+    <Position X="9.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Data\Estado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibreriaJose.Models.Data.Formato">
+    <Position X="9.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Data\Formato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LibreriaJoseAntonio.Models.Data.ItemCarrito">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAEACAAAAAAAAAgABAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Data\ItemCarrito.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Libro" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

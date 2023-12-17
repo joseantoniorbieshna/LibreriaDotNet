@@ -43,21 +43,7 @@ namespace LibreriaJoseAntonio.Controllers
             return View(new List<ItemCarrito>());
             
         }
-        [HttpPost]
-        public JsonResult GetTotalCarrito() {
-            if (User.Identity.IsAuthenticated)
-            {
-                string idUsuarioActual = User.Identity.GetUserId();
-                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro)
-                    .Where(libro => libro.IdUser.Equals(idUsuarioActual));
-
-                float total = itemsCarrito.ToList().Sum(item => item.calcularTotal());
-                return Json(total);
-            }
-            return Json(0);
-        }
-
-        // GET: ItemCarrito/Details/5
+        // GET: ItemCarritoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -72,19 +58,19 @@ namespace LibreriaJoseAntonio.Controllers
             return View(itemCarrito);
         }
 
-        // GET: ItemCarrito/Create
+        // GET: ItemCarritoes/Create
         public ActionResult Create()
         {
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo");
+            ViewBag.Id_libro = new SelectList(db.Libros, "Id", "ISBN");
             return View();
         }
 
-        // POST: ItemCarrito/Create
+        // POST: ItemCarritoes/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Isbn,Cantidad,IdUser")] ItemCarrito itemCarrito)
+        public ActionResult Create([Bind(Include = "Id,Id_libro,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)
             {
@@ -93,11 +79,11 @@ namespace LibreriaJoseAntonio.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
+            ViewBag.Id_libro = new SelectList(db.Libros, "Id", "ISBN", itemCarrito.Id_libro);
             return View(itemCarrito);
         }
 
-        // GET: ItemCarrito/Edit/5
+        // GET: ItemCarritoes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -109,16 +95,16 @@ namespace LibreriaJoseAntonio.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
+            ViewBag.Id_libro = new SelectList(db.Libros, "Id", "ISBN", itemCarrito.Id_libro);
             return View(itemCarrito);
         }
 
-        // POST: ItemCarrito/Edit/5
+        // POST: ItemCarritoes/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Isbn,Cantidad,IdUser")] ItemCarrito itemCarrito)
+        public ActionResult Edit([Bind(Include = "Id,Id_libro,Cantidad,IdUser")] ItemCarrito itemCarrito)
         {
             if (ModelState.IsValid)
             {
@@ -126,11 +112,11 @@ namespace LibreriaJoseAntonio.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Isbn = new SelectList(db.Libros, "ISBN", "Titulo", itemCarrito.Id);
+            ViewBag.Id_libro = new SelectList(db.Libros, "Id", "ISBN", itemCarrito.Id_libro);
             return View(itemCarrito);
         }
 
-        // GET: ItemCarrito/Delete/5
+        // GET: ItemCarritoes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -145,7 +131,7 @@ namespace LibreriaJoseAntonio.Controllers
             return View(itemCarrito);
         }
 
-        // POST: ItemCarrito/Delete/5
+        // POST: ItemCarritoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -156,6 +142,7 @@ namespace LibreriaJoseAntonio.Controllers
             return RedirectToAction("Index");
         }
 
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -165,11 +152,26 @@ namespace LibreriaJoseAntonio.Controllers
             base.Dispose(disposing);
         }
 
+
+
+        [HttpPost]
+        public JsonResult GetTotalCarrito()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string idUsuarioActual = User.Identity.GetUserId();
+                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro)
+                    .Where(libro => libro.IdUser.Equals(idUsuarioActual));
+
+                float total = itemsCarrito.ToList().Sum(item => item.calcularTotal());
+                return Json(total);
+            }
+            return Json(0);
+        }
+
         [HttpPost]
         public JsonResult AgregarItem(string isbn,int cantidad, bool remplazar) {
-            /*
-             * Respuestas "true","false","outStock","full"
-             */
+            // Respuestas "true","false","outStock","full"
             if (User.Identity.IsAuthenticated) { 
                 //Libro libro = db.Libros;
                 string userId = User.Identity.GetUserId();

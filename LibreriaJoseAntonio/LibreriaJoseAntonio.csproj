@@ -195,7 +195,6 @@
     <Compile Include="Models\Data\Producto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Repository\LibroDao.cs" />
     <Compile Include="Models\Repository\LibroRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -257,6 +256,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Models\Diagrams\Diagrama.cd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -327,14 +327,15 @@
     <Content Include="Views\Libro\Details.cshtml" />
     <Content Include="Views\Libro\Edit.cshtml" />
     <Content Include="Views\Libro\Index.cshtml" />
-    <Content Include="Views\ItemCarrito\Create.cshtml" />
+    <Content Include="Views\ItemCarrito\Index.cshtml" />
+    <Content Include="Views\ItemCarrito\Edit.cshtml" />
     <Content Include="Views\ItemCarrito\Delete.cshtml" />
     <Content Include="Views\ItemCarrito\Details.cshtml" />
-    <Content Include="Views\ItemCarrito\Edit.cshtml" />
-    <Content Include="Views\ItemCarrito\Index.cshtml" />
+    <Content Include="Views\ItemCarrito\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ItemCarritoes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
