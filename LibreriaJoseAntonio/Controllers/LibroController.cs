@@ -158,6 +158,28 @@ namespace LibreriaJoseAntonio.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private bool RemoteFileExists(string url)
+        {
+            try
+            {
+                //Creamos el HttpWebRequest
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                //ajustamos a Head, aunque también se puede GET
+                request.Method = "HEAD";
+                //Obtenemos la respuesta we.
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                //Retorna verdadero si el status code == 200
+                response.Close();
+                return (response.StatusCode == HttpStatusCode.OK);
+            }
+            catch
+            {
+                //Si algo sale mal retornamos false.
+                return false;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -166,5 +188,7 @@ namespace LibreriaJoseAntonio.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

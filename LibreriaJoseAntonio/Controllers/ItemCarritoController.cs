@@ -29,14 +29,32 @@ namespace LibreriaJoseAntonio.Controllers
             ViewBag.Total = 0f;
             if (User.Identity.IsAuthenticated) {
                 string idUsuarioActual = User.Identity.GetUserId();
-                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro).Where( libro=>libro.IdUser.Equals(idUsuarioActual) );
-                float total=itemsCarrito.ToList().Sum(libro => libro.calcularTotal());
+                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro).Include(e=>e.Libro.Autor_id)
+                    .Include(e => e.Libro.Estado_id)
+                    .Include(e => e.Libro.Editorial_id)
+                    .Include(e => e.Libro.Autor_id)
+                    .Include(e => e.Libro.Formato_id)
+                    .Where( libro=>libro.IdUser.Equals(idUsuarioActual) );
+
+                float total=itemsCarrito.ToList().Sum(item => item.calcularTotal());
                 ViewBag.Total = total;
                 return View(itemsCarrito.ToList());
             }
             return View(new List<ItemCarrito>());
             
-            
+        }
+        [HttpPost]
+        public JsonResult GetTotalCarrito() {
+            if (User.Identity.IsAuthenticated)
+            {
+                string idUsuarioActual = User.Identity.GetUserId();
+                var itemsCarrito = db.ItemsCarrito.Include(i => i.Libro)
+                    .Where(libro => libro.IdUser.Equals(idUsuarioActual));
+
+                float total = itemsCarrito.ToList().Sum(item => item.calcularTotal());
+                return Json(total);
+            }
+            return Json(0);
         }
 
         // GET: ItemCarrito/Details/5

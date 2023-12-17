@@ -4,43 +4,205 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
+    .my_img {
+        max-width:10rem;
+    }
+    .container_product {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-items: center;
+        align-items:center;
+    }
+
+    .info_container {
+        max-width: 20rem;
+        justify-self: start;
+    }
+    .mydata {
+        font-weight:bold;
+    }
+    .db_data {
+       font-weight:normal;
+    }
+    .mybutton {
+        margin: 0;
+        background-color: transparent;
+        color: black;
+    }
+    .container_cantidad {
+        display: flex;
+    }
+    .cantidad-carrito {
+        width: 4rem;
+        text-align: center;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .container_carrito_detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1rem;
+    }
+</style>
+<div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
+<h2>Lista Carrito</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Libro.Titulo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IdUser)
-        </th>
-        <th></th>
-    </tr>
+<div class="container_all">
+    @foreach (var item in Model)
+    {
+        <hr />
+        <div class="container_product">
+            <div class="container_img">
+                <img src="@item.Libro.Imagen" class="img-fluid my_img" />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Libro.Titulo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdUser)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+            </div>
+            <div class="info_container" data-isbn="@item.Libro.ISBN" data-cantidadmaxima="@item.Libro.Cantidad">
+                <p class="mydata">Titulo: <span class="titulo db_data">@item.Libro.Titulo</span></p>
+                <p class="mydata">Autor: <span class="autor db_data">@item.Libro.Autor_id.Nombre</span></p>
+                <p class="mydata">Precio: <span class="precio db_data">@item.Libro.Precio€</span></p>
+                <p class="mydata">Cantidad: <span class="cantidad db_data">@item.Cantidad</span></p>
+            </div>
 
-</table>
-<div>Total: @ViewBag.Total</div>
+            <div class="container_carrito_detail">
+                <div class="container_cantidad">
+                    <button class="fa fa-minus mybutton restar"></button>
+                    <input type="number" min="0" disabled max="999" class="cantidad-carrito" value="@item.Cantidad" />
+                    <button class="fa fa-plus mybutton sumar"></button>
+                </div>
+                <div class="container_link">
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "fa fa-edit btn btn-outline-warning" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "fa fa-trash btn btn-outline-danger" })
+                </div>
+            </div>
+        </div>
+
+    }
+    <hr />
+</div>
+
+<div class="mydata">Total: <span class="total db_data">@ViewBag.Total</span></div>
+
+
+
+<script>
+
+    function addAlert(typeAlert, mensaje) {
+        console.log("Alerta.");
+        var idUnico = new Date().getTime();
+        var htmlAlerta = `<div id="alerta${idUnico}" class="alert ${typeAlert}" role="alert">${mensaje}</div>`;
+        $('#contenedorAlertas').append(htmlAlerta);
+        $(`#alerta${idUnico}`).fadeIn();
+
+        setTimeout(function () {
+            $(`#alerta${idUnico}`).fadeOut(400, function () {
+                $(this).remove();
+            });
+        }, 1000);
+    }
+
+
+async function request(isbn,cantidad) {
+
+    // Realiza la solicitud directamente aquí
+    var responseRequest = await fetch('@Url.Action("AgregarItem", "ItemCarrito")', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                isbn: isbn,
+                cantidad: cantidad,
+                remplazar: true
+            })
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+
+            //Si salio bien
+            if (data == "true") {
+                console.log("Ha ido bien, añadido libro.");
+                addAlert("alert-success", `Cantidad de libros cambiada a ${cantidad} libros `);
+
+                return true;
+
+            } else if (data == "outStock") {
+                addAlert("alert-danger", "Fuera de Stock.");
+            } else if (data == "full") {
+
+                addAlert("alert-warning", "Carrito Lleno");
+            } else {
+                console.log("No se ha podido agregar")
+            }
+            return false;
+        }).catch(err => {
+            console.error('Error durante la solicitud', err);
+            return false;
+        });
+    return responseRequest;
+    };
+
+     function calcularTotal() {
+        fetch('@Url.Action("GetTotalCarrito", "ItemCarrito")', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            $(".total").text(data)
+        }).catch(err => {
+            console.error('Error durante la solicitud de calcular total', err);
+        });
+    
+    }
+
+
+
+    $(document).ready(function () {
+        // clic para todos los elementos con la clase "sumar"
+        $(".sumar").click(async function () {
+            var padre = $(this).closest(".container_product");
+            var cantidad = parseInt(padre.find(".cantidad-carrito").val(), 10);
+            var isbn = padre.find(".info_container").data("isbn");
+            console.log(isbn);
+
+            var response = await request(isbn, cantidad + 1);
+            if (response) {
+                cantidad++;
+                padre.find(".cantidad-carrito").val(cantidad);
+                padre.find(".cantidad").text(`${cantidad}`);
+                calcularTotal();
+            }
+        });
+    });
+
+
+        $(document).ready(function () {
+            // clic para todos los elementos con la clase "restar"
+            $(".restar").click(async function () {
+                var padre = $(this).closest(".container_product");
+                var cantidad = parseInt(padre.find(".cantidad-carrito").val(), 10);
+                var isbn = padre.find(".info_container").data("isbn");
+
+                var response = await request(isbn, cantidad - 1);
+
+                if (cantidad > 1 && response) {
+                    cantidad--;
+                    padre.find(".cantidad-carrito").val(cantidad);
+                    padre.find(".cantidad").text(`${cantidad}`);
+                    calcularTotal();
+                }
+            });
+        });
+
+</script>
