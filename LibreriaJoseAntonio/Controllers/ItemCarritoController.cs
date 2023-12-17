@@ -26,6 +26,7 @@ namespace LibreriaJoseAntonio.Controllers
         // GET: ItemCarrito
         public ActionResult Index()
         {
+             
 
             ViewBag.Total = 0f;
             if (User.Identity.IsAuthenticated) {
@@ -59,11 +60,12 @@ namespace LibreriaJoseAntonio.Controllers
 
                         db.Entry(libro).State = EntityState.Modified;
                         if (item.Cantidad > libro.Cantidad) {
-                            ViewBag.error = "EL libro " + libro.Titulo + " no cumple los requisitos";
+                        TempData["Error"] = "EL libro " + libro.Titulo + " no cumple los requisitos";
                             return RedirectToAction("Index");
                         }
                         libro.Cantidad -= item.Cantidad;
-                    }
+                        db.ItemsCarrito.Remove(item);
+                }
 
 
                     db.SaveChanges();

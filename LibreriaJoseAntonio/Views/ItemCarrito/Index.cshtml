@@ -109,7 +109,7 @@
     <hr />
 </div>
 <div class="result">
-    @* @Html.ActionLink("Comprar", "Comprar", null, new { @class = "btn btn-outline-success" })*@
+    @Html.ActionLink("Comprar", "Comprar", null, new { @class = "btn btn-outline-success" })
     <div class="mydata">Total: <span class="total db_data">@ViewBag.Total</span><span class="euro">€</span></div>
 </div>
 
@@ -281,10 +281,10 @@ async function request(isbn,cantidad) {
 
 </script>
 
-@if (ViewBag.error != null)
+@if (TempData["Error"] != null)
 {
     <script>
-        addAlert("alert-danger", @ViewBag.errores);
+        addAlert("alert-danger", '@TempData["Error"]');
     </script>
     
 }

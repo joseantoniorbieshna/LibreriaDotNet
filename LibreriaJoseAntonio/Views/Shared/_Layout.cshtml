@@ -24,10 +24,12 @@
                     <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
                     <li>@Html.ActionLink("Libro", "Index", "Libro", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
-                    <li>@Html.ActionLink("Estado", "Index", "Estado", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
-                    <li>@Html.ActionLink("Editorial", "Index", "Editorial", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
-                    <li>@Html.ActionLink("Formato", "Index", "Formato", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
-                    <li>@Html.ActionLink("Autor", "Index", "Autor", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                    @if (User.IsInRole("Administrador")) {
+                        <li>@Html.ActionLink("Estado", "Index", "Estado", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                        <li>@Html.ActionLink("Editorial", "Index", "Editorial", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                        <li>@Html.ActionLink("Formato", "Index", "Formato", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
+                        <li>@Html.ActionLink("Autor", "Index", "Autor", new { area = "" }, new { @class = "nav-link nav-opt" })</li>  
+                    }
                     <li>@Html.ActionLink("Carrito", "Index", "ItemCarrito", new { area = "" }, new { @class = "nav-link nav-opt" })</li>
 
                 </ul>
