@@ -11,12 +11,14 @@
     }
 
     .all_product {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 
     .container_product {
+        display:flex;
+        justify-content:center;
+
         overflow: hidden;
         cursor: pointer;
         animation-duration: 500ms;
@@ -78,15 +80,15 @@
         height: 3rem;
     }
 
-        .carrito-btn:hover {
-            color: white;
-            background-color: black;
-        }
+    .carrito-btn:hover {
+        color: white;
+        background-color: black;
+    }
 
-        .carrito-btn:active {
-            color: black;
-            background-color: white;
-        }
+    .carrito-btn:active {
+        color: black;
+        background-color: white;
+    }
 
     #contenedorAlertas {
         z-index: 10;
@@ -99,6 +101,9 @@
     .nologin {
         margin-top: 1rem;
         margin-bottom: 1rem;
+    }
+    .fixed-width {
+        width: 300px;
     }
 </style>
 <div class="position-fixed top-0 end-0 p-3" id="contenedorAlertas"></div>
@@ -114,7 +119,7 @@
         {
             <div class="container_product ">
                 <div class="data-product redireccion" data-url="@Url.Action("Details", "Libro", new {id=item.Id})">
-                    <img src="@item.Imagen" class="img-fluid ancho" />
+                    <img src="@item.Imagen" class="img-fluid ancho fixed-width" />
                     <div class="info_book ancho">
 
                         <p class="title text-center important_text mydata">@Html.DisplayFor(modelItem => item.Titulo)</p>

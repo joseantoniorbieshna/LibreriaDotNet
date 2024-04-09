@@ -111,6 +111,12 @@ namespace LibreriaJoseAntonio.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Autor autor = db.Autores.Find(id);
+            if (db.Libros.Include(l => l.Autor_id).Any(libro => libro.Autor_id.Id == id))
+            {
+                // Si hay libros asociados el autor, mostrar una alerta
+                TempData["Error"] = "No se puede eliminar el autor porque hay libros asociados a él.";
+                return RedirectToAction("Delete", new { id = id });
+            }
             db.Autores.Remove(autor);
             db.SaveChanges();
             return RedirectToAction("Index");

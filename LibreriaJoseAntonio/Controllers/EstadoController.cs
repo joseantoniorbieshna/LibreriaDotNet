@@ -112,6 +112,13 @@ namespace LibreriaJoseAntonio.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Estado estado = db.Estados.Find(id);
+
+            if (db.Libros.Include(l => l.Estado_id).Any(libro=>libro.Estado_id.Id==id)) {
+                // Si hay libros asociados al estado, mostrar una alerta
+                TempData["Error"] = "No se puede eliminar el estado porque hay libros asociados a él.";
+                return RedirectToAction("Delete", new { id = id });
+            }
+
             db.Estados.Remove(estado);
             db.SaveChanges();
             return RedirectToAction("Index");

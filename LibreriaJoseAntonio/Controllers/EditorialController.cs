@@ -112,6 +112,12 @@ namespace LibreriaJoseAntonio.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Editorial editorial = db.Editoriales.Find(id);
+            if (db.Libros.Include(l => l.Editorial_id).Any(libro => libro.Editorial_id.Id == id))
+            {
+                // Si hay libros asociados a la editorial, mostrar una alerta
+                TempData["Error"] = "No se puede eliminar la editorial porque hay libros asociados a él.";
+                return RedirectToAction("Delete", new { id = id });
+            }
             db.Editoriales.Remove(editorial);
             db.SaveChanges();
             return RedirectToAction("Index");

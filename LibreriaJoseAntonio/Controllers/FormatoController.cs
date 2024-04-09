@@ -112,6 +112,12 @@ namespace LibreriaJoseAntonio.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Formato formato = db.Formatos.Find(id);
+            if (db.Libros.Include(l => l.Formato_id).Any(libro => libro.Formato_id.Id == id))
+            {
+                // Si hay libros asociados al formato, mostrar una alerta
+                TempData["Error"] = "No se puede eliminar el formato porque hay libros asociados a él.";
+                return RedirectToAction("Delete", new { id = id });
+            }
             db.Formatos.Remove(formato);
             db.SaveChanges();
             return RedirectToAction("Index");
